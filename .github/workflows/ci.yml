@@ -11,15 +11,17 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Windows, X64]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build Docker image
+        shell: powershell
         run: docker build . -t my-image:latest
 
       - name: Save Docker image
+        shell: powershell
         run: docker save my-image:latest -o image.tar
 
       - name: Create Release
@@ -30,7 +32,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     environment:
       name: github-pages
