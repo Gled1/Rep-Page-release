@@ -1,4 +1,4 @@
-name: Build Docker + Release + Deploy Pages
+name: CI/CD
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
 
       - name: Build Docker image
         shell: powershell
-        run: docker build . -t my-image:latest
+        run: docker build . -t my-image:${{ github.sha }}
 
       - name: Save Docker image
         shell: powershell
-        run: docker save my-image:latest -o image.tar
+        run: docker save my-image:${{ github.sha }} -o image.tar
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
