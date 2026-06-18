@@ -27,7 +27,8 @@ jobs:
         shell: powershell
         run: |
           $token = "${{ secrets.DOCKERHUB_TOKEN }}"
-          $token | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          docker logout
+          docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p $token
 
       - name: Build Docker image
         shell: powershell
